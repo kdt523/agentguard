@@ -28,3 +28,9 @@ __pycache__/
 
 # Original blueprint kit (copied to repo root)
 agentguard-blueprint/
+
+# Local planning/agent files (not part of the program)
+.claude/
+CLAUDE.md
+PLAN.md
+START_HERE.md

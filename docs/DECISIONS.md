@@ -57,7 +57,7 @@ One entry per non-obvious decision: date, decision, why, alternatives considered
 - **Alternatives:** drop formatting enforcement (rejected); pin JDK 21 locally (not installed).
 
 ## 2026-10-09 — Repository location
-- **Decision:** the repo root is `c:\agentguard`; the blueprint kit's `CLAUDE.md`, `PLAN.md`,
+- **Decision:** the repo root is the project folder; build plans are kept locally, outside git.
   `START_HERE.md` and `.claude/` were copied to the root. The original kit folder is gitignored.
 
 ## 2026-10-09 — Fixtures use MCP Python SDK 2.3.0 (`MCPServer`, not `FastMCP`)

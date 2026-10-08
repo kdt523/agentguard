@@ -8,7 +8,7 @@ capability graph to find toxic data-flow paths, pins tool definitions to detect 
 simulated agent with LLM-generated attacks, and produces a TruRisk-inspired risk score with fixes, via a
 REST API, a CLI (CI gate), and HTML/SARIF reports.
 
-**Status: under construction.** See [PLAN.md](PLAN.md) for progress.
+**Status: under construction.** Phases 0–1 complete (build skeleton, fixture MCP servers).
 
 ## Build
 
