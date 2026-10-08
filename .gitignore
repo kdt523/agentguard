@@ -1,0 +1,30 @@
+# Maven
+target/
+.mvn/tools/
+!.mvn/wrapper/maven-wrapper.properties
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Benchmarks raw data (large / licensed)
+benchmarks/data/raw/
+
+# Python (fixtures)
+__pycache__/
+*.pyc
+.venv/
+
+# Original blueprint kit (copied to repo root)
+agentguard-blueprint/
