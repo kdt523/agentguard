@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: agentguard
+  datasource:
+    url: ${AG_DB_URL:jdbc:postgresql://localhost:5432/agentguard}
+    username: ${AG_DB_USER:agentguard}
+    password: ${AG_DB_PASSWORD:agentguard}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  ai:
+    model:
+      # LLM is opt-in; set AG_LLM_PROVIDER=google-genai (with GEMINI_API_KEY) to enable Gemini.
+      chat: ${AG_LLM_PROVIDER:none}
+      embedding: none
+      image: none
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
