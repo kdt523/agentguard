@@ -1,0 +1,57 @@
+# Ground truth for AgentGuard fixtures. Every later phase is tested against this file.
+# Phase 3 may add or rename check IDs; update this file in the same commit when it does.
+servers:
+  clean-calculator:
+    tools:
+      add: { expect: [] }
+      multiply: { expect: [] }
+  clean-notes:
+    tools:
+      list_notes: { expect: [] }
+      read_note: { expect: [] }
+  clean-weather:
+    tools:
+      get_forecast: { expect: [] }
+  poisoned-math:
+    tools:
+      add: { expect: [AG-TP-001, AG-TP-002, AG-TP-003, AG-SC-002] }
+  shadowing-mailer:
+    tools:
+      get_fact: { expect: [AG-SH-001, AG-SH-002] }
+  overprivileged-fs:
+    tools:
+      run_shell: { expect: [AG-PE-001, AG-PE-002, AG-PE-003, AG-PE-004] }
+      delete_path: { expect: [AG-PE-002, AG-PE-003, AG-PE-004] }
+      read_file: { expect: [AG-PE-004] }
+  schema-tricks:
+    tools:
+      translate: { expect: [AG-TP-004, AG-TP-005, AG-SC-001] }
+  rugpull:
+    tools:
+      get_quote: { expect: [] }        # v1 is clean; drift is detected in phase 5
+  trifecta-reader:
+    tools:
+      fetch_webpage: { expect: [] }
+      read_github_issue: { expect: [] }
+  trifecta-secrets:
+    tools:
+      read_env: { expect: [] }
+      read_file: { expect: [] }
+  trifecta-sender:
+    tools:
+      http_post: { expect: [] }
+
+capabilities:
+  trifecta-reader/fetch_webpage: [UNTRUSTED_INPUT]
+  trifecta-reader/read_github_issue: [UNTRUSTED_INPUT]
+  trifecta-secrets/read_env: [PRIVATE_DATA]
+  trifecta-secrets/read_file: [PRIVATE_DATA]
+  trifecta-sender/http_post: [EXTERNAL_SINK]
+
+toxic_flows:
+  set: [trifecta-reader, trifecta-secrets, trifecta-sender]
+  expected_path_count: 4          # 2 untrusted x 2 private x 1 sink
+  expected_min_cut: [trifecta-sender/http_post]
+
+drift:
+  rugpull: { tool: get_quote, expect: AG-DR-001, mutate_after_list_calls: 3, mutate_env: MUTATE=1 }

@@ -1,0 +1,11 @@
+clean-calculator
+clean-notes
+clean-weather
+poisoned-math
+shadowing-mailer
+overprivileged-fs
+schema-tricks
+rugpull
+trifecta-reader
+trifecta-secrets
+trifecta-sender

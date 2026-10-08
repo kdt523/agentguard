@@ -59,3 +59,25 @@ One entry per non-obvious decision: date, decision, why, alternatives considered
 ## 2026-10-09 — Repository location
 - **Decision:** the repo root is `c:\agentguard`; the blueprint kit's `CLAUDE.md`, `PLAN.md`,
   `START_HERE.md` and `.claude/` were copied to the root. The original kit folder is gitignored.
+
+## 2026-10-09 — Fixtures use MCP Python SDK 2.3.0 (`MCPServer`, not `FastMCP`)
+- **Decision:** fixtures pin `mcp==2.3.0`. In SDK v2 `FastMCP` was renamed to
+  `mcp.server.mcpserver.MCPServer`; the skill's "FastMCP" maps to that class.
+- The v2 server still accepts the classic initialize handshake (2024-11-05 … 2025-11-25) in addition to
+  the 2026-07-28 protocol, so older clients (incl. the Java SDK) can connect.
+
+## 2026-10-09 — Fixture ground-truth refinements
+- `shadowing-mailer` has **no** `<IMPORTANT>` tags, so it plants only AG-SH-001/002 (with the tags,
+  AG-TP-001 would rightly fire and muddy the ground truth).
+- `overprivileged-fs` expectations are split per tool in `expected.yaml`: `run_shell` → PE-001..004,
+  `delete_path` → PE-002..004, `read_file` → PE-004.
+- Trifecta and clean tools carry explicit annotations and bounded (`pattern`/`maxLength`) params so
+  they plant no static issues — they exist only for the toxic-flow graph.
+- `rugpull` sends `notifications/tools/list_changed` **request-scoped** (on the response stream of the
+  triggering `tools/list`): a connection-scoped notification was not delivered to a streamable-HTTP
+  client that had not opened the standalone SSE stream.
+
+## 2026-10-09 — Smoke client is the MCP Python SDK, in `fixtures/.venv`
+- **Decision:** `fixtures/smoke.sh` uses `smoke_client.py` (MCP Python SDK client) instead of
+  `@modelcontextprotocol/inspector --cli`, avoiding a Node dependency. stdio fixtures are launched with
+  `docker run --rm -i --network none`.
