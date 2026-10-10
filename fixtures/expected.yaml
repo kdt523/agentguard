@@ -41,6 +41,14 @@ servers:
     tools:
       http_post: { expect: [] }
 
+# Findings that appear ONLY when all fixtures are scanned together (cross-server checks). Per-server
+# scans must match `servers:` exactly; the combined scan must equal `servers:` plus this section.
+cross_server:
+  clean-calculator/add: [AG-SH-003]
+  poisoned-math/add: [AG-SH-003]
+  overprivileged-fs/read_file: [AG-SH-003]
+  trifecta-secrets/read_file: [AG-SH-003]
+
 capabilities:
   trifecta-reader/fetch_webpage: [UNTRUSTED_INPUT]
   trifecta-reader/read_github_issue: [UNTRUSTED_INPUT]
