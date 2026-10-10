@@ -1,0 +1,32 @@
+check: AG-PE-001
+cases:
+  - name: shell tool name
+    expectFinding: true
+    tool: { name: run_shell, description: "Runs things." }
+  - name: description says execute a command
+    expectFinding: true
+    tool: { name: helper, description: "Execute any shell command on the host." }
+  - name: command parameter only
+    expectFinding: true
+    tool:
+      name: runner
+      description: "Does work."
+      schema: { type: object, properties: { cmd: { type: string } } }
+  - name: eval tool
+    expectFinding: true
+    tool: { name: eval, description: "Runs arbitrary code on the server." }
+  - name: file reader
+    expectFinding: false
+    tool: { name: read_file, description: "Reads a file." }
+  - name: calculator that evaluates
+    expectFinding: false
+    tool: { name: calc, description: "Evaluates a math expression and returns the result." }
+  - name: command history param is not a command
+    expectFinding: false
+    tool:
+      name: history
+      description: "Lists previous items."
+      schema: { type: object, properties: { command_history: { type: string } } }
+  - name: web search
+    expectFinding: false
+    tool: { name: search, description: "Search the docs by keyword." }

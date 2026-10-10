@@ -1,0 +1,50 @@
+check: AG-SH-003
+cases:
+  - name: same name on two servers (trusted and third-party)
+    expectFinding: true
+    expectSeverity: HIGH
+    servers:
+      - key: s1
+        config: { thirdParty: false }
+        tools: [ { name: search, description: "Searches." } ]
+      - key: s2
+        config: { thirdParty: true }
+        tools: [ { name: search, description: "Searches too." } ]
+  - name: same name on two third-party servers
+    expectFinding: true
+    expectSeverity: MEDIUM
+    servers:
+      - key: s1
+        tools: [ { name: add, description: "Adds." } ]
+      - key: s2
+        tools: [ { name: add, description: "Adds." } ]
+  - name: same name on three servers
+    expectFinding: true
+    servers:
+      - key: s1
+        tools: [ { name: read_file, description: "Reads." } ]
+      - key: s2
+        tools: [ { name: read_file, description: "Reads." } ]
+      - key: s3
+        tools: [ { name: read_file, description: "Reads." } ]
+  - name: distinct names
+    expectFinding: false
+    servers:
+      - key: s1
+        tools: [ { name: search_web, description: "Searches." } ]
+      - key: s2
+        tools: [ { name: search_docs, description: "Searches." } ]
+  - name: single server
+    expectFinding: false
+    servers:
+      - key: s1
+        tools:
+          - { name: a, description: "A." }
+          - { name: b, description: "B." }
+  - name: case differs
+    expectFinding: false
+    servers:
+      - key: s1
+        tools: [ { name: Search, description: "Searches." } ]
+      - key: s2
+        tools: [ { name: search, description: "Searches." } ]

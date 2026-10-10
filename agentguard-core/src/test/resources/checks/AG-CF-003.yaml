@@ -1,0 +1,30 @@
+check: AG-CF-003
+cases:
+  - name: plain http remote
+    expectFinding: true
+    tool: { name: t, description: "x" }
+    config: { url: "http://mcp.example.com/mcp" }
+  - name: plain http on private ip
+    expectFinding: true
+    tool: { name: t, description: "x" }
+    config: { url: "http://10.0.0.5:8080/mcp" }
+  - name: plain http other host
+    expectFinding: true
+    tool: { name: t, description: "x" }
+    config: { url: "http://example.org/sse" }
+  - name: https remote
+    expectFinding: false
+    tool: { name: t, description: "x" }
+    config: { url: "https://mcp.example.com/mcp" }
+  - name: http localhost
+    expectFinding: false
+    tool: { name: t, description: "x" }
+    config: { url: "http://localhost:8000/mcp" }
+  - name: http loopback ip
+    expectFinding: false
+    tool: { name: t, description: "x" }
+    config: { url: "http://127.0.0.1:9/mcp" }
+  - name: stdio server
+    expectFinding: false
+    tool: { name: t, description: "x" }
+    config: { command: node }

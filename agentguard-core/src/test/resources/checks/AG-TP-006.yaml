@@ -1,0 +1,37 @@
+check: AG-TP-006
+cases:
+  - name: over absolute limit
+    expectFinding: true
+    tool: { name: big, description: "word ", descriptionRepeat: 400 }
+  - name: far above server median
+    expectFinding: true
+    servers:
+      - key: s1
+        tools:
+          - { name: a, description: "Adds numbers." }
+          - { name: b, description: "Subtracts numbers." }
+          - { name: c, description: "ab cd ef gh ", descriptionRepeat: 40 }
+  - name: just over limit
+    expectFinding: true
+    tool: { name: edge, description: "abcdefghi ", descriptionRepeat: 151 }
+  - name: short description
+    expectFinding: false
+    tool: { name: add, description: "Adds numbers." }
+  - name: exactly at limit
+    expectFinding: false
+    tool: { name: edge, description: "abcdefghi ", descriptionRepeat: 150 }
+  - name: long but below the 300 floor
+    expectFinding: false
+    servers:
+      - key: s1
+        tools:
+          - { name: a, description: "Adds numbers." }
+          - { name: b, description: "Subtracts numbers." }
+          - { name: c, description: "ab cd ef gh ", descriptionRepeat: 20 }
+  - name: relative rule needs three tools
+    expectFinding: false
+    servers:
+      - key: s1
+        tools:
+          - { name: a, description: "Adds." }
+          - { name: c, description: "ab cd ef gh ", descriptionRepeat: 40 }

@@ -1,0 +1,34 @@
+check: AG-CF-001
+cases:
+  - name: npx without version
+    expectFinding: true
+    tool: { name: t, description: "x" }
+    config: { command: npx, args: ["-y", "@modelcontextprotocol/server-filesystem"] }
+  - name: npx plain package
+    expectFinding: true
+    tool: { name: t, description: "x" }
+    config: { command: npx, args: ["-y", "some-pkg"] }
+  - name: uvx without pin
+    expectFinding: true
+    tool: { name: t, description: "x" }
+    config: { command: uvx, args: ["mcp-server-git"] }
+  - name: npx latest tag is unpinned
+    expectFinding: true
+    tool: { name: t, description: "x" }
+    config: { command: npx, args: ["-y", "some-pkg@latest"] }
+  - name: npx pinned scoped package
+    expectFinding: false
+    tool: { name: t, description: "x" }
+    config: { command: npx, args: ["-y", "@modelcontextprotocol/server-filesystem@1.2.3"] }
+  - name: uvx pinned
+    expectFinding: false
+    tool: { name: t, description: "x" }
+    config: { command: uvx, args: ["mcp-server-git==0.1.0"] }
+  - name: docker command
+    expectFinding: false
+    tool: { name: t, description: "x" }
+    config: { command: docker, args: ["run", "--rm", "-i", "image:1"] }
+  - name: remote url server
+    expectFinding: false
+    tool: { name: t, description: "x" }
+    config: { url: "https://example.com/mcp" }

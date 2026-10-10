@@ -1,0 +1,56 @@
+check: AG-PE-004
+cases:
+  - name: unbounded path
+    expectFinding: true
+    tool:
+      name: read
+      description: "Reads."
+      schema: { type: object, properties: { path: { type: string } } }
+  - name: unbounded url
+    expectFinding: true
+    tool:
+      name: fetch
+      description: "Fetches."
+      schema: { type: object, properties: { url: { type: string } } }
+  - name: unbounded camel case file path
+    expectFinding: true
+    tool:
+      name: open
+      description: "Opens."
+      schema: { type: object, properties: { filePath: { type: string } } }
+  - name: suffix url
+    expectFinding: true
+    tool:
+      name: hook
+      description: "Calls."
+      schema: { type: object, properties: { target_url: { type: string } } }
+  - name: path with pattern
+    expectFinding: false
+    tool:
+      name: read
+      description: "Reads."
+      schema: { type: object, properties: { path: { type: string, pattern: "^[\\w./-]+$" } } }
+  - name: url with format
+    expectFinding: false
+    tool:
+      name: fetch
+      description: "Fetches."
+      schema: { type: object, properties: { url: { type: string, format: uri } } }
+  - name: path with max length
+    expectFinding: false
+    tool:
+      name: read
+      description: "Reads."
+      schema: { type: object, properties: { path: { type: string, maxLength: 256 } } }
+  - name: ordinary string parameter
+    expectFinding: false
+    tool:
+      name: greet
+      description: "Greets."
+      schema: { type: object, properties: { name: { type: string } } }
+  - name: non string path
+    expectFinding: false
+    tool:
+      name: pick
+      description: "Picks."
+      schema: { type: object, properties: { path: { type: integer } } }

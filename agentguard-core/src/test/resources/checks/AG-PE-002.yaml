@@ -1,0 +1,32 @@
+check: AG-PE-002
+cases:
+  - name: delete without annotations
+    expectFinding: true
+    tool: { name: delete_file, description: "Deletes a file." }
+  - name: delete with destructiveHint false
+    expectFinding: true
+    tool:
+      name: remove_user
+      description: "Removes a user."
+      annotations: { destructiveHint: false }
+  - name: write verb in description
+    expectFinding: true
+    tool: { name: save, description: "Write the note to disk." }
+  - name: run verb
+    expectFinding: true
+    tool: { name: run_job, description: "Starts the job." }
+  - name: delete with destructiveHint true
+    expectFinding: false
+    tool:
+      name: delete_file
+      description: "Deletes a file."
+      annotations: { destructiveHint: true }
+  - name: read only getter
+    expectFinding: false
+    tool: { name: get_weather, description: "Get the weather for a city." }
+  - name: list tool
+    expectFinding: false
+    tool: { name: list_items, description: "Lists the items." }
+  - name: search tool
+    expectFinding: false
+    tool: { name: search_docs, description: "Searches the documents." }

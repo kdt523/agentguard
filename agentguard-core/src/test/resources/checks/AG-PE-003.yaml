@@ -1,0 +1,32 @@
+check: AG-PE-003
+cases:
+  - name: delete tool without annotations
+    expectFinding: true
+    tool: { name: delete_item, description: "Deletes an item." }
+  - name: send email without annotations
+    expectFinding: true
+    tool: { name: send_email, description: "Sends an email." }
+  - name: create issue without annotations
+    expectFinding: true
+    tool: { name: create_issue, description: "Creates an issue." }
+  - name: empty annotations object
+    expectFinding: true
+    tool:
+      name: update_row
+      description: "Updates a row."
+      annotations: {}
+  - name: send email with annotations
+    expectFinding: false
+    tool:
+      name: send_email
+      description: "Sends an email."
+      annotations: { readOnlyHint: false }
+  - name: read tool without annotations
+    expectFinding: false
+    tool: { name: read_note, description: "Reads a note." }
+  - name: getter without annotations
+    expectFinding: false
+    tool: { name: get_weather, description: "Get the weather." }
+  - name: search without annotations
+    expectFinding: false
+    tool: { name: search, description: "Searches documents." }
