@@ -21,6 +21,8 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
+      - name: Build fixture MCP server images (needed by integration tests)
+        run: bash fixtures/build_all.sh
       - name: Build, test, coverage, format check
         run: ./mvnw -B verify
       - name: Upload JaCoCo reports

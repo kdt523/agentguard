@@ -97,3 +97,33 @@ One entry per non-obvious decision: date, decision, why, alternatives considered
   (`servers.config` stores `envKeys` only).
 - **Pagination** of list calls is capped at 100 pages so a malicious server cannot loop forever.
 - **ITs need Docker Desktop running**; they fail with "Could not find a valid Docker environment" otherwise.
+
+## 2026-10-10 — Phase 3: static check engine decisions
+- **Taxonomy:** OWASP MCP Top 10 (2025) verified at github.com/OWASP/www-project-mcp-top-10; mapping and
+  rationale in `docs/OWASP_MAPPING.md`. The list has no dedicated shadowing or rug-pull entries, so
+  AG-SH-* and AG-DR-* map to MCP03 (Tool Poisoning) as variants.
+- **Pattern files are line-based, not YAML:** `agentguard-core` may only depend on Jackson databind, so
+  `patterns/<id>.patterns` use `confidence | name | regex` lines. (YAML is used only in core *tests*.)
+- **Hidden text is judged once, by the check that owns it:** TP-001/TP-002/SC-001 inspect *visible*
+  text only. Text hidden via the Unicode tag block is reported by TP-004 (escalated to CRITICAL when the
+  decoded text is an instruction) and base64/hex/percent blobs by TP-005. This keeps one planted issue
+  from producing four findings and matches `fixtures/expected.yaml`.
+- **Scope of text checks:** TP-001/002/003 and SH-001/002 read the tool's own description/title; SC-001 reads
+  schema text (description, default, enum, examples, title). A poisoned `default` is therefore SC-001, not TP-001.
+- **PE-002 verb list includes `run`/`exec`/`execute`** so shell runners are flagged as destructive without
+  `destructiveHint` (required by the `overprivileged-fs` ground truth). `add` is deliberately not a side-effect verb.
+- **SH-001 only matches identifier-like tool names** (snake/kebab/camelCase, >= 4 chars) of tools on a
+  *different* server, so plain words such as `add` never cause false positives.
+- **SH-003 and the fixtures:** `add` (calculator + poisoned-math) and `read_file` (overprivileged-fs +
+  trifecta-secrets) legitimately collide when all fixtures are scanned together. `expected.yaml` therefore
+  has a `cross_server` section; per-server scans must match `servers:` exactly and the combined scan must
+  equal `servers:` + `cross_server:`.
+- **Unknown servers are treated as third-party** for scoring (+5), the conservative default.
+- **A crashing check never aborts a scan:** it becomes an INFO finding `AG-ENG-000` (message redacted).
+- **Emoji ZWJ sequences and LRM/RLM in RTL text are not flagged** by TP-004, to avoid false positives on
+  legitimate text.
+- **LLM classifier (AG-TP-900) is implemented but not wired:** `LlmPoisoningClassifier` + `CachingLlmPort`
+  exist and are unit-tested with a fake LLM; no `LlmPort` adapter exists until phase 7, and scan
+  integration is phase 6. Tool text is fenced as untrusted data in the prompt.
+- **Known limitations:** config-level checks (CF-*) run per *successfully fetched* server, so a server that
+  fails to connect gets no config findings; evidence offsets refer to the analysed view, not the raw field.
