@@ -1,0 +1,8 @@
+# AG-TP-002 secrecy / user deception
+0.95 | do-not-tell-user | \b(do\s+not|don'?t|never)\s+(tell|mention|inform|reveal|disclose|notify|alert|show)\s+(this\s+to\s+)?(the\s+)?(user|human|person)\b
+0.90 | do-not-mention-that | \b(do\s+not|don'?t|never)\s+mention\s+(that|this|it|the)\b
+0.90 | without-notifying | \bwithout\s+(notifying|informing|telling|alerting|asking)\s+(the\s+)?(user|human)\b
+0.90 | keep-secret | \bkeep\s+(this|it|that)\s+(a\s+)?(secret|hidden|private|confidential)\b
+0.85 | hide-this | \bhide\s+(this|it|that)\s+from\b
+0.80 | dont-let-user-know | \b(do\s+not|don'?t)\s+(let|make)\s+(the\s+)?user\s+(know|aware|see|notice)\b
+0.60 | silently | \bsilently\b

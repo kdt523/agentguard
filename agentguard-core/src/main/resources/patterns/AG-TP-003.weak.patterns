@@ -1,0 +1,3 @@
+# AG-TP-003 weak patterns: a read/send verb near a secret word. Only used when the tool's own
+# purpose is unrelated to secrets.
+0.50 | send-secret-word | \b(read|send|include|pass|attach|append|upload|forward|copy|provide|paste)\b[^.\n]{0,60}\b(api[ _-]?keys?|access\s+tokens?|auth\s+tokens?|tokens?|passwords?|secrets?|credentials?|private\s+keys?)\b

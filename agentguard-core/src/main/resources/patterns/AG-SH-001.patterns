@@ -1,0 +1,5 @@
+# AG-SH-001 cross-tool reference
+0.90 | when-tool-is-used | \bwhen\s+(the\s+|a\s+|any\s+)?[`'"]?[\w.-]+[`'"]?\s+tool\b[^.]{0,40}\bis\s+(used|called|invoked|run|executed)
+0.85 | side-effect-on-tool | \bside[ -]effects?\s+(on|to|for)\b[^.]{0,40}\btool\b
+0.80 | also-present-tool | \balso\s+present\b[^.]{0,30}\btool\b
+0.75 | tool-from-any-server | \btool\s*\(from\s+(any|another|other)\s+server\)

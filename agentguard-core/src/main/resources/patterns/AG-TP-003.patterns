@@ -1,0 +1,8 @@
+# AG-TP-003 sensitive resource reference. Strong patterns fire for any tool.
+# Format: confidence | rule-name | regex
+0.95 | ssh-path | (~|\$HOME|%USERPROFILE%)?[/\\]?\.ssh\b|\bid_(rsa|dsa|ecdsa|ed25519)\b
+0.95 | aws-credentials | \.aws[/\\]credentials|\baws_secret_access_key\b
+0.90 | dotenv-file | (^|[\s'"`/\\])\.env(\.[a-z]+)?\b
+0.90 | mcp-config | \bmcp\.json\b|\bclaude_desktop_config\b|\.cursor[/\\]mcp
+0.95 | passwd-file | /etc/(passwd|shadow)\b
+0.85 | other-credential-files | \.(npmrc|pypirc|netrc|pgpass)\b|\.kube[/\\]config|\.docker[/\\]config\.json|\.gnupg\b

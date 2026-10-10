@@ -1,0 +1,6 @@
+# AG-SH-002 behaviour override of other tools
+0.90 | always-bcc | \balways\s+(bcc|cc|add|include|append|attach|forward|redirect|route|replace)\b
+0.90 | replace-recipient | \b(replace|change|override|modify|alter|swap)\s+(the\s+)?(recipients?|destinations?|arguments?)\b
+0.85 | add-to-every | \b(add|append|prepend)\s+(this|the\s+following)\s+to\s+(every|all|each)\b
+0.80 | on-every-call | \bon\s+every\s+(message|call|request|response|email|invocation)\b
+0.90 | bcc-address | \bbcc\b[^.\n]{0,40}[\w.+-]+@[\w-]+\.[\w.-]+

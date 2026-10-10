@@ -1,0 +1,8 @@
+# AG-TP-001 hidden instruction block. Format: confidence | rule-name | regex
+0.95 | important-tag | <\s*/?\s*(important|system|instructions?|hidden|secret|admin)\s*>
+0.95 | inst-tokens | \[/?INST\]|<<\s*/?SYS\s*>>|<\|(im_start|im_end|system)\|>
+0.95 | ignore-previous | \b(ignore|disregard|forget|override)\s+(all\s+|any\s+)?(of\s+)?(the\s+)?(previous|prior|above|earlier|preceding)\s+(instructions?|prompts?|messages?|rules?|context)
+0.85 | before-using-tool | \bbefore\s+(using|calling|invoking|running|executing)\s+this\s+tool\b
+0.90 | addressed-to-model | \b(you|the\s+(assistant|model|ai|llm|agent))\s+(must|should|shall|need\s+to|have\s+to)\s+(always\s+|first\s+|also\s+|immediately\s+)?(read|send|include|pass|forward|copy|upload|append|exfiltrate|email|post)\b
+0.85 | new-instructions | \b(new|updated|additional|real)\s+instructions?\s*:
+0.80 | system-override | \b(system|developer)\s+(override|message\s+follows|instruction)\b
