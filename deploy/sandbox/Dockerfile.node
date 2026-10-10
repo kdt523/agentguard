@@ -1,0 +1,5 @@
+# Sandbox runtime for third-party Node MCP servers (npx). Runs as non-root.
+FROM node:20-slim
+RUN useradd --create-home --uid 10001 sandbox
+USER sandbox
+WORKDIR /tmp

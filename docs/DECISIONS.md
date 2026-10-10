@@ -81,3 +81,19 @@ One entry per non-obvious decision: date, decision, why, alternatives considered
 - **Decision:** `fixtures/smoke.sh` uses `smoke_client.py` (MCP Python SDK client) instead of
   `@modelcontextprotocol/inspector --cli`, avoiding a Node dependency. stdio fixtures are launched with
   `docker run --rm -i --network none`.
+
+## 2026-10-10 — Phase 2: MCP connector decisions
+- **MCP Java SDK 2.0.0 API (verified with javap):** `McpClient.sync(transport)`, `StdioClientTransport(ServerParameters, McpJsonDefaults.getMapper())`,
+  `HttpClientStreamableHttpTransport.builder(origin).endpoint(path)`, `HttpClientSseClientTransport.builder(origin).sseEndpoint(path)`.
+  Tool schemas arrive as `Map<String,Object>`; the adapter converts them to Jackson 3 `JsonNode`.
+- **Sandbox install step:** `SandboxCommandBuilder.install()` (bridge network, writes into a per-server
+  named volume `agentguard-sbx-cache-<key>`) is implemented and unit-tested; `run()` then mounts the same
+  volume with `--network none` and offline env (`npm_config_offline`, `UV_OFFLINE`). Trade-off: arbitrary
+  packages cannot be baked into an image, so the one-time install phase has network access but no secrets
+  (env is only passed to the offline run). The install flow is only wired for real third-party servers in
+  phase 8, after the STOP-point confirmation of `benchmarks/clean_servers.yaml`.
+- **Remote third-party servers** must match `agentguard.remote.allowed-hosts`; otherwise rejected.
+- **Dedup:** an unchanged `snapshotSha256` only advances `fetched_at`; env values are never persisted
+  (`servers.config` stores `envKeys` only).
+- **Pagination** of list calls is capped at 100 pages so a malicious server cannot loop forever.
+- **ITs need Docker Desktop running**; they fail with "Could not find a valid Docker environment" otherwise.

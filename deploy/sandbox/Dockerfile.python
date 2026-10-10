@@ -1,0 +1,5 @@
+# Sandbox runtime for third-party Python MCP servers (uvx / python). Runs as non-root.
+FROM python:3.11-slim
+RUN pip install --no-cache-dir uv && useradd --create-home --uid 10001 sandbox
+USER sandbox
+WORKDIR /tmp

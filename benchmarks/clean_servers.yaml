@@ -1,0 +1,14 @@
+# PROPOSED list of real third-party MCP servers used as the clean set in phase 8
+# (false-positive measurement). Official reference servers only.
+# STATUS: awaiting human confirmation - nothing here is pulled or executed until confirmed.
+# When confirmed, each runs ONLY inside the network-less sandbox (deploy/sandbox).
+status: proposed
+servers:
+  - { key: filesystem, runtime: node,   command: npx, args: ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"] }
+  - { key: memory,     runtime: node,   command: npx, args: ["-y", "@modelcontextprotocol/server-memory"] }
+  - { key: everything, runtime: node,   command: npx, args: ["-y", "@modelcontextprotocol/server-everything"] }
+  - { key: git,        runtime: python, command: uvx, args: ["mcp-server-git"] }
+  - { key: fetch,      runtime: python, command: uvx, args: ["mcp-server-fetch"] }
+  - { key: time,       runtime: python, command: uvx, args: ["mcp-server-time"] }
+# Versions are intentionally unpinned here; phase 8 pins the exact versions it measures
+# and records them in benchmarks/results/.
